@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Leaflet.MarkerFollower demo</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.ie.css" />
+<![endif]-->
+<style>
+body {
+    text-align: center;
+}
+#map {
+    height: 300px;
+    max-width: 700px;
+    margin: auto;
+}
+/* styles the follower element */
+.leaflet-marker-follower {
+    cursor: pointer;
+    background: #fff;
+    padding: 3px;
+    /* this is necessary when you have multiple markers, it causes followers
+     * to overlap, but that's probably better than disappearing or
+     * mispositioned followers */
+    position: absolute;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 3px #000;
+}
+</style>
+</head>
+<body>
+<h1>Leaflet.MarkerFollower demo</h1>
+<p>
+Drag the map to move the marker out of view and notice the
+block near the edges.
+
+<div id="map"></div>
+
+<p>
+Brought to you by <a href="https://lekensteyn.nl/">Peter Wu</a>.
+
+<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+<script src="Leaflet.MarkerFollower.js"></script>
+<script>
+(function () {
+    'use strict';
+
+    // location on the map to place the marker
+    var markerPos = [51.4478874, 5.4859518];
+    var map = L.map('map').setView(markerPos, 16);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Adds a marker at the center position
+    var marker = L.marker(markerPos).addTo(map)
+        .bindPopup('TU/e');
+
+    // Follow the marker off-screen
+    L.markerFollower(marker).addTo(map);
+
+    // add another marker for Eindhoven Station
+    var stationMarker = L.marker([51.4436, 5.4786]).addTo(map)
+        .bindPopup("Eindhoven Station");
+    L.markerFollower(stationMarker).addTo(map);
+}());
+</script>
+
+<a href="https://github.com/Lekensteyn/Leaflet.MarkerFollower"><img
+    style="position: absolute; top: 0; right: 0; border: 0;"
+    src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+    alt="Fork me on GitHub"></a>
+</body>
+</html>
